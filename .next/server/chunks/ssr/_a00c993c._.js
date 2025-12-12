@@ -1,0 +1,3 @@
+module.exports=[35112,(a,b,c)=>{"use strict";b.exports=a.r(42602).vendored["react-ssr"].ReactDOM},21078,16201,a=>{"use strict";var b=a.i(87924);a.i(72131);var c=a.i(97630);function d({className:a,...d}){return(0,b.jsx)("div",{"data-slot":"card",className:(0,c.cn)("bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",a),...d})}function e({className:a,...d}){return(0,b.jsx)("div",{"data-slot":"card-content",className:(0,c.cn)("px-6",a),...d})}a.s(["Card",()=>d,"CardContent",()=>e],21078);let f=(0,a.i(70106).default)("circle-check-big",[["path",{d:"M21.801 10A10 10 0 1 1 17 3.335",key:"yps3ct"}],["path",{d:"m9 11 3 3L22 4",key:"1pflzl"}]]);a.s(["CheckCircle",()=>f],16201)}];
+
+//# sourceMappingURL=_a00c993c._.js.map
