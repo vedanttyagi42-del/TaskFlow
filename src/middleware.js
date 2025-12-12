@@ -1,38 +1,49 @@
 import { NextResponse } from "next/server";
 
-// Public pages → accessible without login
 const publicRoutes = ["/", "/login", "/signup"];
-
-// Private pages → requires login
 const protectedRoutes = ["/dashboard", "/tasks"];
 
-export function middleware(req) {
-  const token = req.cookies.get("token")?.value || null;
-
+export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
 
-  // ⛔ 1. If NOT logged in and trying to access protected route → redirect to /login
-  if (!token && protectedRoutes.some((route) => pathname.startsWith(route))) {
-    const loginUrl = new URL("/login", req.url);
-    return NextResponse.redirect(loginUrl);
+  // call backend /me route to validate auth cookie
+  const isProtected = protectedRoutes.some((r) => pathname.startsWith(r));
+
+  let loggedIn = false;
+
+  try {
+    const meRes = await fetch("https://taskflowserver-7lnc.onrender.com/me", {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Cookie: req.headers.get("cookie") || ""
+      }
+    });
+
+    loggedIn = meRes.ok;
+  } catch (err) {
+    loggedIn = false;
   }
 
-  // ⛔ 2. If logged in and trying to access /, /login, /signup → redirect to /dashboard
-  if (token && publicRoutes.includes(pathname)) {
-    const dashboardUrl = new URL("/dashboard", req.url);
-    return NextResponse.redirect(dashboardUrl);
+  // 1. protected route but NOT logged in → redirect to login
+  if (!loggedIn && isProtected) {
+    return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Allow everything else
+  // 2. public route but logged in → redirect to dashboard
+  if (loggedIn && publicRoutes.includes(pathname)) {
+    return NextResponse.redirect(new URL("/dashboard", req.url));
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    "/", 
+    "/",
     "/login",
     "/signup",
-    "/dashboard/:path*", 
+    "/dashboard/:path*",
     "/tasks/:path*"
-  ],
+  ]
 };
