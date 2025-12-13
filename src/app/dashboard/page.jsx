@@ -56,7 +56,11 @@ export default function Dashboard() {
         },
         body: JSON.stringify({ task_name: newTitle }),
       });
-
+      if (!res.ok) {
+        const text = await res.text();
+        console.error("Create task failed:", res.status, text);
+        throw new Error("Failed to create task");
+      }
       const data = await res.json();
       console.log("Created:", data);
 
