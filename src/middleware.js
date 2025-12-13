@@ -3,35 +3,21 @@ import { NextResponse } from "next/server";
 const publicRoutes = ["/", "/login", "/signup"];
 const protectedRoutes = ["/dashboard", "/tasks"];
 
-export async function middleware(req) {
+export function middleware(req) {
   const pathname = req.nextUrl.pathname;
+  const token = req.cookies.get("token")?.value;
 
-  // call backend /me route to validate auth cookie
-  const isProtected = protectedRoutes.some((r) => pathname.startsWith(r));
+  const isProtected = protectedRoutes.some(route =>
+    pathname.startsWith(route)
+  );
 
-  let loggedIn = false;
-
-  try {
-    const meRes = await fetch("https://taskflowserver-7lnc.onrender.com/me", {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        Cookie: req.headers.get("cookie") || ""
-      }
-    });
-
-    loggedIn = meRes.ok;
-  } catch (err) {
-    loggedIn = false;
-  }
-
-  // 1. protected route but NOT logged in → redirect to login
-  if (!loggedIn && isProtected) {
+  // 1. Not logged in → block protected routes
+  if (!token && isProtected) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // 2. public route but logged in → redirect to dashboard
-  if (loggedIn && publicRoutes.includes(pathname)) {
+  // 2. Logged in → block public routes
+  if (token && publicRoutes.includes(pathname)) {
     return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
@@ -43,7 +29,7 @@ export const config = {
     "/",
     "/login",
     "/signup",
-    "/dashboard/",
-    "/tasks/"
-  ]
+    "/dashboard/:path*",
+    "/tasks/:path*",
+  ],
 };
