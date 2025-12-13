@@ -43,7 +43,7 @@ export const config = {
     "/",
     "/login",
     "/signup",
-    "/dashboard/:path*",
-    "/tasks/:path*"
+    "/dashboard/",
+    "/tasks/"
   ]
 };
