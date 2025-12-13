@@ -10,11 +10,11 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
-
+  const Url = process.env.NEXT_PUBLIC_SERVER_ADRESS;
   async function handleLogin(e) {
     e.preventDefault();
     setError("");
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ADRESS}/login`, {
+    const res = await fetch(`${Url}/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
