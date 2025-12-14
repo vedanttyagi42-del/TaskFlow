@@ -20,11 +20,11 @@ export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [openModal, setOpenModal] = useState(false);
   const [newTitle, setNewTitle] = useState("");
-
+  const Url = process.env.NEXT_PUBLIC_SERVER_ADRESS;
   // Fetch user tasks
   const fetchTasks = async () => {
     try {
-      const res = await fetch(`${process.NEXT_PUBLIC_SERVER_ADRESS}/tasks`, {
+      const res = await fetch(`${Url}/tasks`, {
         method: "GET",
         credentials: "include",
       });
@@ -48,7 +48,7 @@ export default function Dashboard() {
     if (!newTitle.trim()) return;
 
     try {
-      const res = await fetch(`${process.NEXT_PUBLIC_SERVER_ADRESS}/tasks`, {
+      const res = await fetch(`${Url}/tasks`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -78,7 +78,7 @@ export default function Dashboard() {
   // Mark Task Complete / Toggle
   const toggleComplete = async (id, currentStatus) => {
     try {
-      const res = await fetch(`${process.NEXT_PUBLIC_SERVER_ADRESS}/tasks/${id}`, {
+      const res = await fetch(`${Url}/tasks/${id}`, {
         method: "PATCH",
         credentials: "include",
       });
@@ -96,7 +96,7 @@ export default function Dashboard() {
   // Delete Task
 const deleteTask = async (id) => {
   try {
-    const res = await fetch(`${process.NEXT_PUBLIC_SERVER_ADRESS}/tasks/${id}`, {
+    const res = await fetch(`${Url}/tasks/${id}`, {
       method: "DELETE",
       credentials: "include",
     });
