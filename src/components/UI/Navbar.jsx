@@ -16,12 +16,12 @@ const Navbar = () => {
   const [hovered, setHovered] = useState(false);
   const pathname = usePathname();
   const isRight = false;
-
+  const Url = process.env.NEXT_PUBLIC_SERVER_ADRESS;
   // Fetch user
   useEffect(() => {
     const fetchCurrentUser = async () => {
       try {
-        const res = await fetch(`${process.NEXT_PUBLIC_SERVER_ADRESS}/me`, {
+        const res = await fetch(`${Url}/me`, {
           method: "GET",
           credentials: "include",
         });
@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const onLogout = async () => {
     try {
-      await fetch(`${process.NEXT_PUBLIC_SERVER_ADRESS}/logout`, {
+      await fetch(`${Url}/logout`, {
         method: "POST",
         credentials: "include",
       });
