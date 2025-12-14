@@ -51,6 +51,7 @@ const Navbar = () => {
         method: "POST",
         credentials: "include",
       });
+      document.cookie = "auth=; Max-Age=0; Path=/";
       window.location.href = "/";
     } catch (err) {
       console.log("Logout error:", err);
