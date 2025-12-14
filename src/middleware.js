@@ -5,7 +5,7 @@ const protectedRoutes = ["/dashboard", "/tasks"];
 
 export function middleware(req) {
   const pathname = req.nextUrl.pathname;
-  const token = req.cookies.get("token")?.value;
+  const token = req.cookies.get("auth")?.value;
 
   const isProtected = protectedRoutes.some(route =>
     pathname.startsWith(route)
