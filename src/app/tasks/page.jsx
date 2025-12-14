@@ -9,10 +9,10 @@ import { Button } from "@/components/ui/button";
 export default function TasksPage() {
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const Url = process.env.NEXT_PUBLIC_SERVER_ADRESS;
   const fetchTasks = async () => {
     try {
-      const res = await fetch(`${process.NEXT_PUBLIC_SERVER_ADRESS}/tasks`, {
+      const res = await fetch(`${Url}/tasks`, {
         method: "GET",
         credentials: "include",
       });
