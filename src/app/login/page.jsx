@@ -1,5 +1,4 @@
 "use client";
-console.log("ENV:", process.env.NEXT_PUBLIC_SERVER_ADRESS);
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -29,6 +28,8 @@ export default function LoginPage() {
       console.log(error);
       return;
     }
+    const userData = await res.json();
+    console.log(userData);
     // Success → redirect
     router.push("/dashboard");
   }
