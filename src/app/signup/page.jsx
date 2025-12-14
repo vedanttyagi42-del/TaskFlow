@@ -36,7 +36,9 @@ export default function SignupPage() {
       if (!res.ok) {
         setError(data.error || "Something went wrong");
         return;
-      }
+      }else{
+        document.cookie = "auth=true; Path=/; Secure; SameSite=Lax";
+        }
 
       // Success → redirect
       router.push("/dashboard");
