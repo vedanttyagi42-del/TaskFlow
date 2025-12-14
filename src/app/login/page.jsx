@@ -27,9 +27,9 @@ export default function LoginPage() {
       setError(data.error || "Something went wrong");
       console.log(error);
       return;
+    }else{
+    document.cookie = "auth=true; Path=/; Secure; SameSite=Lax";
     }
-    const userData = await res.json();
-    console.log(userData);
     // Success → redirect
     router.push("/dashboard");
   }
