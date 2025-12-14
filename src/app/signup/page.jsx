@@ -14,12 +14,12 @@ export default function SignupPage() {
   const [error, setError] = useState("");
 
   const router = useRouter();
-
+  const Url = process.env.NEXT_PUBLIC_SERVER_ADRESS;
   async function handleSignup(e) {
     e.preventDefault();
     setError("");
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_ADRESS}/signup`, {
+      const res = await fetch(`${Url}/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
